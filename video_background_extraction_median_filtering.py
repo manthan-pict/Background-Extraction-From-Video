@@ -29,3 +29,5 @@ def extract_background_for_folder(folder_path):
     videos = os.listdir(folder_path)
     for v in videos:
         extract_background(os.path.join(folder_path, v))
+
+extract_background_for_folder("input_vidoes")

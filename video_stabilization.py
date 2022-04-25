@@ -47,19 +47,16 @@ def stabilizeVideo(input_video_path):
     n_frames = int(cp.get(cv2.CAP_PROP_FRAME_COUNT))
 
     # To check the number of frames in the video
-    print(n_frames)
+    # print(n_frames)
 
     width = int(cp.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(cp.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-    print("height", width)
-    print("height", height)
 
     # get the number of frames per second
     fps = cp.get(cv2.CAP_PROP_FPS)
 
     fourcc = cv2.VideoWriter_fourcc(*'MJPG')
-    print(fourcc)
 
     # Try doing 2*width
     out = cv2.VideoWriter(os.path.join("stabilized_video", files[0] + "_stabilized_output.mp4"), 0x7634706d, fps, (width, height))
@@ -138,13 +135,13 @@ def stabilizeVideo(input_video_path):
         frame_stabilized = fixBorder(frame_stabilized)
 
         # Write the frame to the file
-        print(frame_stabilized.shape)
-        print(frame.shape)
+        # print(frame_stabilized.shape)
+        # print(frame.shape)
         frame_out = cv2.hconcat([frame, frame_stabilized])
 
         # If the image is too big, resize it.
         # print(frame_out.shape)
-        print("sabilized frame ", frame_stabilized.shape)
+        # print("sabilized frame ", frame_stabilized.shape)
         if (frame_out.shape[1] > 1920):
             w = int(frame_out.shape[1] / 2)
             h = int(frame_out.shape[0] / 2)
