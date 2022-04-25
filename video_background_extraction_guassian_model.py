@@ -8,20 +8,15 @@ def extract_background(input_video_path):
     files = filename.split(".")
     vid = cv2.VideoCapture(input_video_path)
     frames = []
-    frames.append(cv2.imread(os.path.join("extracted_background", "eastbound_0_2.jpg")))
-    frames.append(cv2.imread(os.path.join("extracted_background", "eastbound_0_2.jpg")))
-    frames.append(cv2.imread(os.path.join("extracted_background", "eastbound_0_2.jpg")))
-    frames.append(cv2.imread(os.path.join("extracted_background", "eastbound_0_2.jpg")))
-    frame_count = 4
-    # while True:
-    #     ret, frame = vid.read()
-    #     if frame is not None:
-    #         frames.append(frame)
-    #         frame_count += 1
-    #     else:
-    #         break
+    frame_count = 0
+    while True:
+        ret, frame = vid.read()
+        if frame is not None:
+            frames.append(frame)
+            frame_count += 1
+        else:
+            break
     frames = np.array(frames)
-    print(frames.shape)
     gmm = GaussianMixture(n_components = 2)
     # initialize a dummy background image with all zeros
     background = np.zeros(shape=(frames.shape[1:]))
@@ -45,4 +40,4 @@ def extract_background(input_video_path):
     cv2.waitKey(0)
 
 
-extract_background("")
+extract_background(os.path.join("input_vidoes", "video_stab_input.mp4"))
