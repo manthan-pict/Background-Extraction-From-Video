@@ -90,20 +90,7 @@ def stabilizeVideo(input_video_path):
         prev_pts = prev_pts[idx]
         curr_pts = curr_pts[idx]
         assert prev_pts.shape == curr_pts.shape
-
-        # fullAffine= FAlse will set the degree of freedom to only 5 i.e translation, rotation and scaling
-        # try fullAffine = True
-        # m = cv2.estimateRigidTransform(prev_pts, curr_pts, fullAffine=False)
-        #
-        # dx = m[0, 2]
-        # dy = m[1, 2]
-        # print(prev_pts.shape)
-        # print(prev_pts)
-        # print(curr_pts.shape)
         m, rigid_mask = cv2.estimateAffinePartial2D(prev_pts, curr_pts)
-        # print(m.shape)
-        # print(rigid_mask.shape)
-        # print(m)
         dx = m[0][2]
         dy = m[1][2]
 
@@ -113,8 +100,6 @@ def stabilizeVideo(input_video_path):
         transforms[i] = [dx, dy, da]
 
         prev_gray = curr_gray
-
-    # print("Frame: " + str(i) +  "/" + str(n_frames) + " -  Tracked points : " + str(len(prev_pts)))
 
     # Find the cumulative sum of tranform matrix for each dx,dy and da
     trajectory = np.cumsum(transforms, axis=0)

@@ -10,23 +10,11 @@ def extract_background(video_path):
     FOI = video.get(cv2.CAP_PROP_FRAME_COUNT) * np.random.uniform(size=60)
     frames = []
 
-    # Uncomment if input is folder of frames and not video
-    # path = "tee"
-    # for i in range(3):
-    #     frames.append(cv2.imread(os.path.join(path, random.choice([
-    #     x for x in os.listdir(path) if x.endswith('.jpg') and
-    #     os.path.isfile(os.path.join(path, x))]))))
-    #     print(random.choice([
-    #     x for x in os.listdir(path) if x.endswith('.jpg') and
-    #     os.path.isfile(os.path.join(path, x))]))
-
     # creating an array of frames from frames chosen above
     for frameOI in FOI:
         video.set(cv2.CAP_PROP_POS_FRAMES, frameOI)
         ret, frame = video.read()
         frames.append(frame)
-
-    # print(np.array(frames).shape)
 
     # calculate the average
     backgroundFrame = np.median(frames, axis=0).astype(dtype=np.uint8)
@@ -37,8 +25,7 @@ def extract_background(video_path):
     cv2.waitKey(0)
 
 
-videos = os.listdir("input_vidoes")
-
-for v in videos:
-    print(v)
-    extract_background(os.path.join("input_vidoes", v))
+def extract_background_for_folder(folder_path):
+    videos = os.listdir(folder_path)
+    for v in videos:
+        extract_background(os.path.join(folder_path, v))
